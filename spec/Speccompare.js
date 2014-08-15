@@ -74,21 +74,21 @@ describe("Answer_Generator",function(){
 
 describe('The whole game can work',function(){
     var game;
-    var my_console ={
-       log : function(){
-
-       }
-    };
+//    var my_console ={
+//       log : function(){
+//
+//       }
+//    };
     beforeEach(function(){
-        game = new Whole_game(my_console);
+        game = new Whole_game();
     });
 
 
 
     it('print welcome when game start', function(){
-        spyOn(my_console,'log');
-        game.start();
-        expect(my_console.log).toHaveBeenCalledWith('Welcome!/n/nPlease input your number(6):');
+        console.log(game.start());
+        expect(game.start()).toBe('Welcome!/n/nPlease input your number(6):');
+        console.log('bbb');
     });
 
 //    it('print ', function () {
