@@ -72,45 +72,45 @@ describe("Answer_Generator",function(){
 
 
 
-describe('The whole game can work',function(){
+describe('The frame of game can work',function(){
     var game;
     var my_console ={
        log : function(){
-
        }
     };
+    var generate;
     beforeEach(function(){
         game = new Whole_game(my_console);
+        spyOn(my_console,'log');
+        generate = new Answer_generator();
     });
 
 
 
     it('print welcome when game start', function(){
-        spyOn(my_console,'log');
         game.start();
         expect(my_console.log).toHaveBeenCalledWith('Welcome!/n/nPlease input your number(6):');
     });
 
-//    it('print ', function () {
-//
-//    });
+    it('print wrong while user input duplicate number', function () {
+        game.process_comparing('1231',generate);
+        expect(my_console.log).toHaveBeenCalledWith('Cannot input your number(X)');
+    });
 
+    it('When answer is 1234, input 4537, print 1A1B',function(){
+        spyOn(generate,'generate_a_four_bit_random_number').and.returnValue('1234');
+        game.process_comparing('4537',generate);
+        expect(my_console.log).toHaveBeenCalledWith('1A1B/n/nPlease input your number(x):')
+    });
 
-
+    it('When answer is 1234, input 1234, print Congratulation',function(){
+        spyOn(generate,'generate_a_four_bit_random_number').and.returnValue('1234');
+        game.process_comparing('1234',generate);
+        expect(my_console.log).toHaveBeenCalledWith('Congratulations!');
+    });
+    it('print Game Over when user lose',function(){
+        game.game_over();
+        expect(my_console.log).toHaveBeenCalledWith('Game Over!');
+    });
 });
-
-
-
-
-//    it('Ensure they have printed welcome',function(){
-//        var game_view = new Game_view();
-//        game_view.at_the_beginning_of_the_game();
-//
-//
-//
-//
-//        expect(.log).toHaveBeenCalledWith('Welcome!');
-//    });
-//
-
 
